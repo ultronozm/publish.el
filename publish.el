@@ -5,7 +5,7 @@
 ;; Author: Paul D. Nelson <nelson.paul.david@gmail.com>
 ;; Version: 0.1
 ;; URL: https://github.com/ultronozm/publish.el
-;; Package-Requires: ((emacs "29.1") (magit "3.0.0"))
+;; Package-Requires: ((emacs "29.1") (magit "3.0.0") (f "0.20.0"))
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify
