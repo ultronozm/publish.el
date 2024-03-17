@@ -117,5 +117,27 @@ current buffer."
           (msg (read-string "Commit message: " default-msg)))
      (publish--core files msg publish-repo-root))))
 
+;;;###autoload
+(defun publish-update-commit-push-this-file ()
+  "Update, commit, and push the current file."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (cond
+     ((not file)
+      (message "Abort: Buffer is not visiting a file."))
+     ((not (file-exists-p file))
+      (message "Abort: File does not exist."))
+     ((magit-anything-staged-p)
+      (message "Abort: There are staged changes in the repository."))
+     (t
+      (progn
+        ;; stage, commit, and push
+        (let* ((default-msg (concat "Update " (file-name-nondirectory file)))
+               (msg (read-string "Commit message: " default-msg)))
+          (magit-stage-file file)
+          (magit-commit-create (list "-m" msg))
+          ;; call the following interactively: (magit-push-current-to-upstream nil)
+          (call-interactively 'magit-push-current-to-upstream)))))))
+
 (provide 'publish)
 ;;; publish.el ends here
