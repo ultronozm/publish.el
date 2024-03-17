@@ -119,7 +119,7 @@ current buffer."
 
 ;;;###autoload
 (defun publish-update-commit-push-this-file ()
-  "Update, commit, and push the current file."
+  "Update, commit, and push the current file in the current repo."
   (interactive)
   (let ((file (buffer-file-name)))
     (cond
