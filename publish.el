@@ -87,7 +87,8 @@ This should be the location of a valid git repository."
      (t
       (dolist (file files)
         (let* ((filename (file-name-nondirectory file))
-               (dest-file (concat (file-name-as-directory repo) filename)))
+               (dest-file (expand-file-name filename
+                                            (file-name-as-directory repo))))
           (copy-file file dest-file t)
           (magit-stage-file filename)))
       (magit-commit-create (list "-m" msg))
@@ -102,8 +103,9 @@ current buffer."
   (let* ((default-file (buffer-file-name))
          (file (read-file-name "File: " default-file))
          (filename (file-name-nondirectory file))
-         (update-p (file-exists-p (concat (file-name-as-directory publish-repo-root)
-                                          filename)))
+         (update-p (file-exists-p (expand-file-name
+                                   filename
+                                   (file-name-as-directory publish-repo-root))))
          (default-msg (concat (if update-p "Update" "Add") " " filename))
          (msg (read-string "Commit message: " default-msg)))
     (publish--core (list file) msg publish-repo-root)))
